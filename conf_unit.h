@@ -14,6 +14,7 @@ public:
 
     /*配置单元的类型标识*/
     enum unit_type_t {
+        UT_NULL,
         UT_BOOL,
         UT_INT32,
         UT_INT64,

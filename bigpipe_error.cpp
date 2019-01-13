@@ -1,6 +1,6 @@
 #include "bigpipe_error.h"
 
-namespace bigepipe
+namespace bigpipe
 {
     char* bigpipe_strerror_r(int32_t errcode, char* buffer, int32_t buflen)
     {

@@ -5,6 +5,7 @@
 #include "conf_unit.h"
 #include "string_util.h"
 #include "exception.h"
+#include <stdio.h>
 
 namespace bigpipe {
 /*bool ConfLoader::load_conf(const std::string& conf_file, ConfUnit& conf_unit)
@@ -246,7 +247,7 @@ ConfUnit* ConfLoader::push_section(ConfUnit* root, const std::vector<std::string
             return son->push_back(new(std::nothrow) ConfUnit(ConfUnit::UT_GROUP));
         }
 
-        current->insert(p, new(std::nothrow) ConfUnit(ConfUnit::UT_GROUP));
+        current->insert(p, new(std::nothrow) ConfUnit(ConfUnit::UT_ARRAY));
         son = (*current)[p];
         if (NULL == son || !son -> is_array()) {
             return NULL;

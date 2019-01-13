@@ -3,11 +3,13 @@
 #include "string"
 #include "conf_load.h"
 #include "conf_mgr.h"
+#include "common.h"
 
 int main()
 {
+    bigpipe::log_open(CONF);
     bigpipe::ConfInfo config;
-    if(bigpipe::ConfMgr::Instance().init(CONF) != true || bigpipe::ConfMgr::Instance().GetConfig(config) != true){
+    if(bigpipe::ConfMgr::Instance().init(CONF) != true  || bigpipe::ConfMgr::Instance().GetConfig(config) != true){
         std::cout<< "ERROR " << CONF << std::endl;
     }
         /*std::cout << "  _conf_dir     : " << config.getter._conf_dir << std::endl;
@@ -21,5 +23,6 @@ int main()
         std::cout << "  _bundler_record_num   : " <<config.getter._bundler_record_num << std::endl;
         std::cout << "  _bundler_timeout   : " << config.getter._bundler_timeout << std::endl;*/
         std::cout << config.getter.tostring()<<std::endl;
+        ss_trace("This is test");
     return 0;
 }

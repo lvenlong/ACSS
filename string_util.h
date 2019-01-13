@@ -33,7 +33,7 @@ public:
     static bool str2uint64(const char* str, uint64_t& number); //将数字字符串转化为64位无符号整数
     static bool str2int64(const char* str, int64_t& number); //将数字字符串转化为64位有符号整数
     static int32_t xstrncpy(char* dest, const char* src, int32_t n); //功能同strncpy。区别在于xstrncpy返回值为成功复制的字节数
-    //static std::string rand_string(); //取得一个随机数的字符串形式
+    static std::string rand_string(); //取得一个随机数的字符串形式
     /*将数字字符串转换成为T型的数字*/
     template <typename T> static bool str2integer(const char* str, T& number) {
         if (NULL == str) {

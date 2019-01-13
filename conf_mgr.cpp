@@ -1,6 +1,7 @@
 #include "conf_mgr.h"
 #include <fstream>
 #include "conf_load.h"
+//#include <stdio.h>
 
 namespace bigpipe {
 int32_t ConfMgr::init(const char* conf_file)
@@ -8,11 +9,12 @@ int32_t ConfMgr::init(const char* conf_file)
     int32_t ret = false;
     bigpipe::ConfUnit *root = bigpipe::ConfLoader::load_conf(conf_file);
     if (!root) {
-        //ss_warn("load conf file %s failed", conf_file);
+        ss_warn("load conf file %s failed", conf_file);
+        //printf("ERROR_1\n");
         return ret;
     }
     if (_info.getter.load((*root)["getter"]) != true) {
-        //ss_warn("load getter conf failed");
+        ss_warn("load getter conf failed");
         if (root) {
             delete root;
             root = NULL;

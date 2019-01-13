@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "log_device.h"
 #include "file_util.h"
@@ -113,8 +116,9 @@ namespace bigpipe
         snprintf(buffer, BUFSIZ, "%s", _file_path);
         struct log_message_t log_message = {
             LOGLEVEL_NOTICE,
-            "BIGPIPE Version:" VERSION, "=ver",
+            "BIGPIPE Version:" /*VERSION*/, "=ver=",
             __FILE__,
+            //itoa(__LINE__, buffer, 10),
             STR(__LINE__),
             __FUNCTION__,
             _create_time,
@@ -148,7 +152,7 @@ namespace bigpipe
         split_policy = get_split_policy();
 
         {
-            Guard<Mutex>guard(&_mutex);
+            Guard<Mutex>guard(_mutex);
 
             if(!is_opened())
                 return -1;

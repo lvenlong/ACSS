@@ -10,10 +10,10 @@ static struct tm* localtime_r(const time_t* timep, struct tm* result = NULL) {
     return ::localtime_r(timep, result);
 }
 
-/*int32_t TimeUtil::gettimeofday(struct ::timeval *tv, struct timezone *tz)
+int32_t TimeUtil::gettimeofday(struct ::timeval *tv, struct timezone *tz)
 {
-    return ::gettimeofday(tv,tz);
-}*/
+    return ::gettimeofday(tv,(__timezone_ptr_t)tz);
+}
 
 uint64_t TimeUtil::get_timestamp_s()
 {

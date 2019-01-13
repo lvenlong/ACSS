@@ -6,7 +6,7 @@
 #include "log_device.h"
 
 #define STR(x) STR2(x)
-#define STR(x) #x
+#define STR2(x) #x
 
 //log level definition
 #define LOGLEVEL_TRACE 0x0
@@ -16,13 +16,16 @@
 #define LOGLEVEL_FATAL 0x4
 #define LOGLEVEL_NOLOG 0x10
 
-namespace bigepipe
+namespace bigpipe
 {
     //加载配置文件，打开日志对象；加载内置日志对象
     void log_open(const char* conf_filepath = NULL);
 
     //关闭日志对象，在main函数结束之前调用
     int32_t log_close();
+
+    class ILogDevice;
+    //class FileLogDevice;
 
     //日志对象
     class LogDeviceManager
@@ -43,17 +46,7 @@ namespace bigepipe
         //将日志写入设备device_name中
         int32_t write(const char* device_name, const struct log_message_t& log_manage);
 
-        void device_close()
-        {
-            std::vector<ILogDevice *>::iterator itr;
-            for(itr = _devices.begin(); itr != _devices.end(); ++itr)
-            {
-                (*itr)->close();
-                delete *itr;
-            }
-
-            _devices.clear();
-        }
+        void device_close();
 
     private:
         //将新设备添加到设备列表中

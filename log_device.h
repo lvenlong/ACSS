@@ -14,6 +14,7 @@
 
 namespace bigpipe
 {
+    class Mutex;
     struct log_message_t //用于表示传输到日志设备的日志信息
     {
         int32_t loglevel; //日志级别
@@ -39,6 +40,8 @@ namespace bigpipe
         virtual int32_t close(void* param = NULL) = 0;
         //写日志,log_message 日志信息
         virtual int32_t write(const struct log_message_t& log_message) = 0;
+        //返回日志设备名称
+        virtual const char* get_name() const = 0;
         //返回日志设备级别
         virtual int32_t get_loglevel() const = 0;
         //返回日志设备分割策略
@@ -96,11 +99,20 @@ namespace bigpipe
          //写日志
          virtual int32_t write(const struct log_message_t& log_message);
      private:
+        //运行time分割策略，满足条件时生成新的日志文件
+        int32_t exec_time_split_policy();
+        //运行size分割策略，满足条件时生成新的文件
+        int32_t exec_size_split_policy(size_t len);
+        //获取日志文件的文件状态
+        int32_t get_file_stat(struct stat& state) const;
+        //格式化日志信息
+        int32_t format_log_message(char* logbuf, int32_t logbufsiz, const struct log_message_t& log_message);
+     private:
         std::string create_filename_suffix();
 
         char _file_path[MAX_FILE_PATH_LEN]; //文件全路径名
         FILE* _fp; //文件指针
-        Mutex _mutex;
+        bigpipe::Mutex* _mutex;
         struct ::timeval _create_time; //文件的创建时间，用于time日志分割策略，采用此成员的原因是通过fstat得到的stat变量无法表示文件创建时间
         off_t _file_size; //存放当前日志文件大小
      };

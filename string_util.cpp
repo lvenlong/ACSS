@@ -249,7 +249,7 @@ int32_t StringUtil::xstrncpy(char* dest, const char* src, int32_t n)
     return ncpy;
 }
 
-/*std::string StringUtil::rand_string()
+std::string StringUtil::rand_string()
 {
     struct timeval tv;
     TimeUtil::gettimeofday(&tv, NULL);
@@ -260,7 +260,7 @@ int32_t StringUtil::xstrncpy(char* dest, const char* src, int32_t n)
     std::string str;
     ss >> str;
     return str;
-}*/
+}
 
 Mutex StringUtil::stMutex;
 }

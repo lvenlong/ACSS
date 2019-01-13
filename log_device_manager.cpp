@@ -1,5 +1,7 @@
 #include <iostream>
 #include <sstream>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "common.h"
 #include "log_device_manager.h"
@@ -48,7 +50,7 @@ namespace bigpipe
 
     static int32_t get_loglevel_from_logdev_confunit(bigpipe::ConfUnit& logdev)
     {
-        std::string level_valstr = logdev["level"].to_string();
+        std::string level_valstr = (*logdev["level"]).to_string();
 
         int32_t level_value;
         if("TRACE" == level_valstr)
@@ -71,7 +73,7 @@ namespace bigpipe
 
     static int32_t get_split_policy_from_logdev_confunit(bigpipe::ConfUnit& logdev)
     {
-        std::string split_policy_valstr = logdev["split_polixy"].to_string();
+        std::string split_policy_valstr = (*logdev["split_policy"]).to_string();
         int32_t split_policy_value;
 
         if("SIZE" == split_policy_valstr)
@@ -91,7 +93,7 @@ namespace bigpipe
         int64_t maxsize_value = 0;
         if(split_policy == BIGPIPE_LOG_SPLIT_POLIT_BY_SIZE)
         {
-            maxsize_value = logdev["max_size"].to_integer();
+            maxsize_value = (*logdev["max_size"]).to_int32();
         }
         return maxsize_value;
     }
@@ -101,7 +103,7 @@ namespace bigpipe
         int32_t life_circle_value = 0;
 
         if(split_policy == BIGPIPE_LOG_SPLIT_POLIT_BY_TIME)
-            life_circle_value = (int32_t)logdev["life_circle"].to_integer();
+            life_circle_value = (*logdev["life_circle"]).to_int32();
         return life_circle_value;
     }
 
@@ -115,8 +117,9 @@ namespace bigpipe
             exit(-1);
         }
 
-        bigpipe::ConfUnit root;
-        if(!bigpipe::ConfUnit::load_conf(conf_filepath, root))
+        bigpipe::ConfUnit *root;
+        //if(!bigpipe::ConfLoader::load_conf(conf_filepath, root))
+        if((root = bigpipe::ConfLoader::load_conf(conf_filepath)) == NULL)
         {
             std::cerr << "failed to load conf" << conf_filepath << std::endl;
             exit(-1);
@@ -124,7 +127,7 @@ namespace bigpipe
 
         try
         {
-            bigpipe::ConfUnit& logdevs = root["log_devices"];
+            bigpipe::ConfUnit& logdevs = *((*root)["log_devices"]);
 
             if(!logdevs.is_array())
             {
@@ -138,18 +141,18 @@ namespace bigpipe
             {
                 bigpipe::ConfUnit& logdev = **citr;
                 int32_t level_value = get_loglevel_from_logdev_confunit(logdev);
-                std::string device_name_valstr = logdev["device_name"].to_string();
-                std::string filepath_valstr = logdev["filepath"].to_string();
+                std::string device_name_valstr = (*(logdev["device_name"])).to_string();
+                std::string filepath_valstr = (*logdev["filepath"]).to_string();
                 int32_t split_policy_value = get_split_policy_from_logdev_confunit(logdev);
                 int64_t maxsize_value = get_maxsize_from_logdev_confunit(logdev, split_policy_value);
                 int32_t life_circle_value = get_life_circle_from_logdev_confunit(logdev, split_policy_value);
-                std::string layout_valstr = logdev["layout"].to_string();
+                std::string layout_valstr = (*logdev["layout"]).to_string();
 
-                bigpipe::ConfUnit& tmp_unit = logdev["file_use_pid"];
+                bigpipe::ConfUnit* tmp_unit = logdev["file_use_pid"];
                 int32_t file_use_pid = 0;
-                if(tmp_unit.get_type() != bigpipe::ConfUnit::UT_NULL)
+                if((*tmp_unit).get_type() != bigpipe::ConfUnit::UT_NULL)
                 {
-                    file_use_pid = tmp_unit.to_int32();
+                    file_use_pid = tmp_unit->to_int32();
                 }
 
                 ILogDevice* device = new(std::nothrow) FileLogDevice(filepath_valstr.c_str(), device_name_valstr.c_str(), level_value, split_policy_value, (off_t)maxsize_value, life_circle_value, layout_valstr.c_str());
@@ -185,7 +188,7 @@ namespace bigpipe
         }
     }
 
-    void log_open(const chat* conf_filepath)
+    void log_open(const char* conf_filepath)
     {
         if(NULL != conf_filepath)
         {
@@ -201,7 +204,7 @@ namespace bigpipe
 
         if(false == manager->is_device_exist("bigpipe"))
         {
-            load_conf_device();
+            load_default_device();
         }
     }
 
@@ -212,7 +215,13 @@ namespace bigpipe
         return 0;
     }
 
-    LogDeviceManager* LogDeviceManager(){}
+    LogDeviceManager::LogDeviceManager(){}
+
+    LogDeviceManager* LogDeviceManager::get_instance()
+    {
+        static LogDeviceManager logger;
+        return &logger;
+    }
 
     LogDeviceManager::~LogDeviceManager()
     {
@@ -224,16 +233,16 @@ namespace bigpipe
         _devices.clear();
     }
 
-    bool LogDeviceManager::is_device_exits(const char* device_name)
+    bool LogDeviceManager::is_device_exist(const char* device_name)
     {
         return get_device(device_name) != NULL;
     }
 
     int32_t LogDeviceManager::add_device(ILogDevice* device)
     {
-        if(is_device_exits(device->get_name()))
+        if(is_device_exist(device->get_name()))
         {
-            return -1
+            return -1;
         }
 
         _devices.push_back(device);
@@ -283,5 +292,17 @@ namespace bigpipe
         else{
             return -1;
         }
+    }
+
+    void LogDeviceManager::device_close()
+    {
+            std::vector<ILogDevice *>::iterator itr;
+            for(itr = _devices.begin(); itr != _devices.end(); ++itr)
+            {
+                (*itr)->close();
+                delete *itr;
+            }
+
+            _devices.clear();
     }
 }

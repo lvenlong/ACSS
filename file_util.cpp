@@ -3,9 +3,12 @@
 
 #include "file_util.h"
 
+#include <unistd.h>
+#include <errno.h>
+
 #define MKDIR(a) mkdir((a), 0755)
 
-namespace bigepipe
+namespace bigpipe
 {
     int32_t FileUtil::close_r(int32_t fd)
     {
@@ -14,7 +17,7 @@ namespace bigepipe
         do
         {
             ret = close(fd);
-        }while(-1 == ret && EINTE == errno);
+        }while(-1 == ret && EINTR == errno);
         return ret;
     }
 

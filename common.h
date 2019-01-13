@@ -9,9 +9,11 @@
 #include <sys/stat.h>
 #include<stdint.h>
 
+#include "log.h"
+
 //typedef int int32_t;
 #define SOCKET int32_t
-#define CONF "../conf/main.conf"
+#define CONF "/home/lvenlong/code_b/bigpipe_listen/conf/main.conf"
 #define MAX_BUNDLER_RECORDS_NUM_EVERY_TRY  10;
 #define CONF_DIR  "./conf";
 #define MAIN_CONF_FILE  "main.conf";
@@ -31,6 +33,13 @@
 #define BUNDLER_TIMEOUT  "bundler_time_out";
 #define BUFFER_SIZE  10240;
 #define PEEK_ERROR_RETRY_NUM_COUNT  5;
+
+#define LOGNAME "session"
+#define ss_trace(fmt, arg...) do{BIGPIPE_TRACE(LOGNAME, fmt, ##arg);}while(0)
+#define ss_debug(fmt, arg...) do{BIGPIPE_DEBUG(LOGNAME, fmt, ##arg);}while(0)
+#define ss_notice(fmt, arg...) do{BIGPIPE_NOTICE(LOGNAME, fmt, ##arg);}while(0)
+#define ss_warn(fmt, arg...) do{BIGPIPE_WARN(LOGNAME, fmt, ##arg);}while(0)
+#define ss_fatal(fmt, arg...) do{BIGPIPE_FATAL(LOGNAME, fmt, ##arg);}while(0)
 
 
 #endif

@@ -22,7 +22,7 @@ public:
     static std::string format_time(const char * fmt = NULL); //格式化当前时间，默认格式为【%Y%m%d-%H:%M:%S】
     static std::string format_time(time_t time, const char * fmt = NULL); //格式化指定时间，默认格式为【%Y%m%d-%H:%M:%S】
     static std::string format_time(const struct timeval* tv, const char * fmt = NULL); //格式化指定时间，默认格式为【%Y%m%d-%H:%M:%S】
-    //static int32_t gettimeofday(struct ::timeval *tv, struct timezone *tz); //格式化指定时间，默认格式为【%Y%m%d-%H:%M:%S】
+    static int32_t gettimeofday(struct ::timeval *tv, struct timezone *tz); //格式化指定时间，默认格式为【%Y%m%d-%H:%M:%S】
     static int32_t get_abs_timespec(struct timespec* ts, int32_t millisecond); //获取从当前时间后 milliSeconds 毫秒后的绝对时间
 };
 }
