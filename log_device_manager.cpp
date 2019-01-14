@@ -150,7 +150,7 @@ namespace bigpipe
 
                 bigpipe::ConfUnit* tmp_unit = logdev["file_use_pid"];
                 int32_t file_use_pid = 0;
-                if((*tmp_unit).get_type() != bigpipe::ConfUnit::UT_NULL)
+                if( tmp_unit != NULL  /*(*tmp_unit).get_type() != bigpipe::ConfUnit::UT_NULL*/)
                 {
                     file_use_pid = tmp_unit->to_integer();
                 }
@@ -167,6 +167,9 @@ namespace bigpipe
                 if(file_use_pid == 1)
                 {
                     oss << getpid();
+                }
+                else{
+                    oss << filepath_valstr;
                 }
 
                 if(0 != (ret = device->open(const_cast<char*>(oss.str().c_str()))))
