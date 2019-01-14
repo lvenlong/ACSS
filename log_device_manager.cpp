@@ -93,7 +93,7 @@ namespace bigpipe
         int64_t maxsize_value = 0;
         if(split_policy == BIGPIPE_LOG_SPLIT_POLIT_BY_SIZE)
         {
-            maxsize_value = (*logdev["max_size"]).to_int32();
+            maxsize_value = (int32_t)(*logdev["max_size"]).to_integer();
         }
         return maxsize_value;
     }
@@ -103,7 +103,7 @@ namespace bigpipe
         int32_t life_circle_value = 0;
 
         if(split_policy == BIGPIPE_LOG_SPLIT_POLIT_BY_TIME)
-            life_circle_value = (*logdev["life_circle"]).to_int32();
+            life_circle_value = (int32_t)(*logdev["life_circle"]).to_integer();
         return life_circle_value;
     }
 
@@ -152,7 +152,7 @@ namespace bigpipe
                 int32_t file_use_pid = 0;
                 if((*tmp_unit).get_type() != bigpipe::ConfUnit::UT_NULL)
                 {
-                    file_use_pid = tmp_unit->to_int32();
+                    file_use_pid = tmp_unit->to_integer();
                 }
 
                 ILogDevice* device = new(std::nothrow) FileLogDevice(filepath_valstr.c_str(), device_name_valstr.c_str(), level_value, split_policy_value, (off_t)maxsize_value, life_circle_value, layout_valstr.c_str());
