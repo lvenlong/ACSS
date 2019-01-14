@@ -123,6 +123,27 @@ int32_t ConfUnit::to_int32() const
     }
 }
 
+int64_t ConfUnit::to_integer() const
+{
+    if (UT_INTEGER == get_type()) {
+        return _union.l;
+    } else if (UT_STRING == get_type()) {
+        std::string trimed_text = bigpipe::StringUtil::trim(to_string());
+        int64_t val;
+
+        if (bigpipe::StringUtil::str2int64(trimed_text.c_str(), val)) {
+            return val;
+        } else {
+            std::stringstream ss;
+            ss << "failed to cast string `" << _string << "' to integer";
+            throw bigpipe::ConfigurationException(ss.str());
+        }
+    } else {
+        throw bigpipe::ConfigurationException("failed to cast");
+    }
+}
+
+
 int64_t ConfUnit::to_int64() const
 {
     if (is_int32()) {

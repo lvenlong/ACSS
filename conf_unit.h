@@ -16,6 +16,7 @@ public:
     enum unit_type_t {
         UT_NULL,
         UT_BOOL,
+        UT_INTEGER,
         UT_INT32,
         UT_INT64,
         UT_DOUBLE,
@@ -41,6 +42,7 @@ public:
     bool is_array() const; //判断配置单元是否为array类型
     bool is_group() const; //判断配置单元是否为group类型
     bool to_bool() const; //取出配置单元中的bool值
+    int64_t to_integer() const; //取出配置单元中的int64值
     int32_t to_int32() const; //取出配置单元中的int32值
     int64_t to_int64() const; //取出配置单元中的int64值
     double to_double() const; //取出配置单元中的double值
