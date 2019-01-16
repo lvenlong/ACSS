@@ -1,6 +1,6 @@
 #ifndef GUARD_H_
 #define GUARD_H_
-
+#include "common.h"
 namespace bigpipe {
 template <typename LockType>
 class Guard {

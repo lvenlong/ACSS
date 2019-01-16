@@ -7,7 +7,7 @@ namespace bigpipe
     //构造函数
     RWLock::RWLock()
     {
-        pthread_rwlock_t(&_rwlock, NULL);
+        pthread_rwlock_init(&_rwlock, NULL);
     }
 
     //析构函数

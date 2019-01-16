@@ -1,6 +1,7 @@
 #ifndef SEMA_H_INCLUDED
 #define SEMA_H_INCLUDED
 
+#include <semaphore.h>
 #include "common.h"
 
 #define BIGPIPE_SEMA_WAIT_INFINITE UINT_MAX
@@ -13,7 +14,7 @@ namespace bigpipe
     {
     public:
         //构造函数；ninit 信号量的初始值
-        Semaphore(int32_t ninit = 0)
+        Semaphore(int32_t ninit = 0);
         //析构函数
         ~Semaphore();
         //等待信号量;millisecond 超时时长（毫秒）

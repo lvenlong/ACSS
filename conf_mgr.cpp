@@ -13,7 +13,7 @@ int32_t ConfMgr::init(const char* conf_file)
         //printf("ERROR_1\n");
         return ret;
     }
-    if (_info.getter.load((*root)["getter"]) != true) {
+    if (_info.getter.load((*root)["getter"]) != true || _info.disp.load((*root)["dispatcher"]) != true) {
         ss_warn("load getter conf failed");
         if (root) {
             delete root;
@@ -109,11 +109,11 @@ int32_t ConfGetter::load(bigpipe::ConfUnit* loader)
     return true;
 }
 
-int32_t ConfDisp::load(bgcc::ConfUnit* loader)
+int32_t ConfDisp::load(bigpipe::ConfUnit* loader)
 {
     get_int32_default(loader, "queue_len", 10000, queue_len);
     get_int32_default(loader, "count", 1, count);
-    return SESS_OK;
+    return true;
 }
 
 }

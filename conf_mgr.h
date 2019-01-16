@@ -70,7 +70,7 @@ public:
         return oss.str();
     }
 public:
-    virtual ~ConfDisp();
+    virtual ~ConfDisp(){};
 };
 
 class ConfInfo {

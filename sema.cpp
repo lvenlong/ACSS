@@ -13,7 +13,7 @@ namespace bigpipe
 
     Semaphore::~Semaphore()
     {
-        sem_destory(&_sem);
+        sem_destroy(&_sem);
     }
 
     int32_t Semaphore::wait(uint32_t millisecond)
