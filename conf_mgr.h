@@ -55,13 +55,33 @@ public:
     virtual ~ConfGetter() {}
 };
 
+class ConfDisp : public IconfLoader
+{
+public:
+    int32_t count;
+    int32_t queue_len;
+    int32_t load(bigpipe::ConfUnit* loader);
+    virtual std::string tostring()
+    {
+        std::ostringstream oss;
+        oss << "DISPATCHER CONFIG" << std::endl;
+        oss << "  queue_len   : " << queue_len << std::endl;
+        oss << "  count       : " << count << std::endl;
+        return oss.str();
+    }
+public:
+    virtual ~ConfDisp();
+};
+
 class ConfInfo {
 public:
     ConfGetter getter;
+    ConfDisp disp;
 
     std::string Dump() {
         std::ostringstream oss;
         oss << getter.tostring();
+        oss << disp.tostring();
         return oss.str();
     }
 };

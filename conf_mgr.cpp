@@ -109,4 +109,11 @@ int32_t ConfGetter::load(bigpipe::ConfUnit* loader)
     return true;
 }
 
+int32_t ConfDisp::load(bgcc::ConfUnit* loader)
+{
+    get_int32_default(loader, "queue_len", 10000, queue_len);
+    get_int32_default(loader, "count", 1, count);
+    return SESS_OK;
+}
+
 }

@@ -23,6 +23,7 @@ int main()
         std::cout << "  _bundler_record_num   : " <<config.getter._bundler_record_num << std::endl;
         std::cout << "  _bundler_timeout   : " << config.getter._bundler_timeout << std::endl;*/
         std::cout << config.getter.tostring()<<std::endl;
+        std::cout << config.disp.tostring() <<std::endl;
         ss_trace("This is test");
     return 0;
 }
