@@ -7,7 +7,7 @@
 #include <limits.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include<stdint.h>
+#include <stdint.h>
 
 #include "log.h"
 
