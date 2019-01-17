@@ -2,7 +2,7 @@
 #include "time_util.h"
 #include <pthread.h>
 
-namespace bigpipe
+namespace LiLong
 {
 Mutex::Mutex()
 {

@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-namespace bigpipe
+namespace LiLong
 {
     class FileUtil
     {

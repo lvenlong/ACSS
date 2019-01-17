@@ -4,10 +4,10 @@
 #include <semaphore.h>
 #include "common.h"
 
-#define BIGPIPE_SEMA_WAIT_INFINITE UINT_MAX
-#define bigpipe_sem_t sem_t
+#define LiLong_SEMA_WAIT_INFINITE UINT_MAX
+#define LiLong_sem_t sem_t
 
-namespace bigpipe
+namespace LiLong
 {
     //实现线程间任务同步
     class Semaphore
@@ -18,7 +18,7 @@ namespace bigpipe
         //析构函数
         ~Semaphore();
         //等待信号量;millisecond 超时时长（毫秒）
-        int32_t wait(uint32_t millisecond = BIGPIPE_SEMA_WAIT_INFINITE);
+        int32_t wait(uint32_t millisecond = LiLong_SEMA_WAIT_INFINITE);
         bool try_wait();
         //触发信号量
         int32_t signal();
@@ -28,7 +28,7 @@ namespace bigpipe
         //禁用赋值运算符
         Semaphore& operator=(const Semaphore&);
     private:
-        bigpipe_sem_t _sem;
+        LiLong_sem_t _sem;
     };
 }
 

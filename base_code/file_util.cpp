@@ -8,7 +8,7 @@
 
 #define MKDIR(a) mkdir((a), 0755)
 
-namespace bigpipe
+namespace LiLong
 {
     int32_t FileUtil::close_r(int32_t fd)
     {

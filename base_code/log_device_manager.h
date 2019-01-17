@@ -16,7 +16,7 @@
 #define LOGLEVEL_FATAL 0x4
 #define LOGLEVEL_NOLOG 0x10
 
-namespace bigpipe
+namespace LiLong
 {
     //加载配置文件，打开日志对象；加载内置日志对象
     void log_open(const char* conf_filepath = NULL);

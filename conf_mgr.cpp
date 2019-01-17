@@ -1,13 +1,13 @@
-#include "conf_mgr.h"
 #include <fstream>
-#include "conf_load.h"
-//#include <stdio.h>
+
+#include "conf_mgr.h"
+#include "./base_code/conf_load.h"
 
 namespace bigpipe {
 int32_t ConfMgr::init(const char* conf_file)
 {
     int32_t ret = false;
-    bigpipe::ConfUnit *root = bigpipe::ConfLoader::load_conf(conf_file);
+    LiLong::ConfUnit *root = LiLong::ConfLoader::load_conf(conf_file);
     if (!root) {
         ss_warn("load conf file %s failed", conf_file);
         //printf("ERROR_1\n");
@@ -40,21 +40,21 @@ int32_t ConfMgr::GetConfig(ConfInfo &c)
     return true;
 }
 
-int32_t IconfLoader::get_int32(bigpipe::ConfUnit *loader, const char *key, int32_t &out)
+int32_t IconfLoader::get_int32(LiLong::ConfUnit *loader, const char *key, int32_t &out)
 {
     std::string out_s;
     if (get_str(loader, key, out_s) != true) {
         return false;
     }
 
-    if (!bigpipe::StringUtil::str2int32(out_s.c_str(), out)) {
+    if (!LiLong::StringUtil::str2int32(out_s.c_str(), out)) {
         return true;
     }
 
     return true;
 }
 
-int32_t IconfLoader::get_int32_default(bigpipe::ConfUnit *loader, const char *key, int32_t def, int32_t &out)
+int32_t IconfLoader::get_int32_default(LiLong::ConfUnit *loader, const char *key, int32_t def, int32_t &out)
 {
     if (get_int32(loader, key, out) != true)	{
         out = def;
@@ -63,7 +63,7 @@ int32_t IconfLoader::get_int32_default(bigpipe::ConfUnit *loader, const char *ke
     return true;
 }
 
-int32_t IconfLoader::get_str_default(bigpipe::ConfUnit *loader, const char *key, const char *def, std::string &out)
+int32_t IconfLoader::get_str_default(LiLong::ConfUnit *loader, const char *key, const char *def, std::string &out)
 {
     if (get_str(loader, key, out) == -1) {
         out = def;
@@ -72,9 +72,9 @@ int32_t IconfLoader::get_str_default(bigpipe::ConfUnit *loader, const char *key,
     return true;
 }
 
-int32_t IconfLoader::get_str(bigpipe::ConfUnit *loader, const char *key, std::string &out)
+int32_t IconfLoader::get_str(LiLong::ConfUnit *loader, const char *key, std::string &out)
 {
-    bigpipe::ConfUnit	*val	= NULL;
+    LiLong::ConfUnit	*val	= NULL;
     std::string tmp_str;
 
     if (!loader || !(loader->is_group()) || !key || !(val = (*loader)[key])) {
@@ -84,7 +84,7 @@ int32_t IconfLoader::get_str(bigpipe::ConfUnit *loader, const char *key, std::st
 
     if (val->is_string()) {
         tmp_str = val->to_string();
-        out = bigpipe::StringUtil::trim(tmp_str);
+        out = LiLong::StringUtil::trim(tmp_str);
         if (out.size()) {
             return true;
         }
@@ -93,7 +93,7 @@ int32_t IconfLoader::get_str(bigpipe::ConfUnit *loader, const char *key, std::st
     return false;
 }
 
-int32_t ConfGetter::load(bigpipe::ConfUnit* loader)
+int32_t ConfGetter::load(LiLong::ConfUnit* loader)
 {
     get_str(loader, "_conf_dir", _conf_dir);
     get_str(loader, "_conf_file", _conf_file);
@@ -109,7 +109,7 @@ int32_t ConfGetter::load(bigpipe::ConfUnit* loader)
     return true;
 }
 
-int32_t ConfDisp::load(bigpipe::ConfUnit* loader)
+int32_t ConfDisp::load(LiLong::ConfUnit* loader)
 {
     get_int32_default(loader, "queue_len", 10000, queue_len);
     get_int32_default(loader, "count", 1, count);

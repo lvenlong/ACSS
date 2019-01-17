@@ -1,7 +1,7 @@
 #include "guard.h"
 #include "shareable.h"
 
-namespace bigpipe
+namespace LiLong
 {
     typedef Guard<Mutex> ScopedGuard;
 

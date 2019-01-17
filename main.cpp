@@ -1,13 +1,16 @@
-#include "string_util.h"
 #include "iostream"
 #include "string"
-#include "conf_load.h"
+
 #include "conf_mgr.h"
-#include "common.h"
+#include "./base_code/string_util.h"
+#include "./base_code/conf_load.h"
+#include "./base_code/common.h"
+
+#define CONF "./conf/main.conf"
 
 int main()
 {
-    bigpipe::log_open(CONF);
+    LiLong::log_open(CONF);
     bigpipe::ConfInfo config;
     if(bigpipe::ConfMgr::Instance().init(CONF) != true  || bigpipe::ConfMgr::Instance().GetConfig(config) != true){
         std::cout<< "ERROR " << CONF << std::endl;

@@ -4,7 +4,7 @@
 #include "common.h"
 #include <pthread.h>
 
-namespace bigpipe{
+namespace LiLong{
     class Mutex{
     public:
 	Mutex();

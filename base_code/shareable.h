@@ -3,7 +3,7 @@
 
 #include "mutex.h"
 
-namespace bigpipe
+namespace LiLong
 {
     //提供具有原子增减的通用计数器功能，可被多个智能指针对象共享
     class Shareable

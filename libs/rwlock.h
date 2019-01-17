@@ -1,9 +1,9 @@
 #ifndef RWLOCK_H_INCLUDED
 #define RWLOCK_H_INCLUDED
 
-#include "common.h"
+#include "../base_code/common.h"
 
-namespace bigpipe
+namespace LiLong
 {
     class RWLock
     {

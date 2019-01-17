@@ -1,8 +1,10 @@
+#include <errno.h>
+
 #include "sema.h"
 #include "time_util.h"
-#include "bigpipe_error.h"
+#include "LiLong_error.h"
 
-namespace bigpipe
+namespace LiLong
 {
     Semaphore::Semaphore(int nint)
     {
@@ -19,7 +21,7 @@ namespace bigpipe
     int32_t Semaphore::wait(uint32_t millisecond)
     {
         int32_t ret = 0;
-        if(BIGPIPE_SEMA_WAIT_INFINITE == millisecond){
+        if(LiLong_SEMA_WAIT_INFINITE == millisecond){
             while((ret = sem_wait(&_sem)) == -1 && EINTR == errno);
         }
         else{
@@ -30,11 +32,11 @@ namespace bigpipe
 
         if(0 != ret)
         {
-            if(BigpipeGetLastError() == ETIMEDOUT){
-                return E_BIGPIPE_TIMEOUT;
+            if(LiLongGetLastError() == ETIMEDOUT){
+                return E_LiLong_TIMEOUT;
             }
             else{
-                return E_BIGPIPE_SYSERROR;
+                return E_LiLong_SYSERROR;
             }
         }
         return 0;
@@ -51,6 +53,6 @@ namespace bigpipe
     {
         int32_t ret = 0;
         while((ret = sem_post(&_sem)) == -1 && EINTR == errno);
-        return (0 == ret ? 0 : E_BIGPIPE_SYSERROR);
+        return (0 == ret ? 0 : E_LiLong_SYSERROR);
     }
 }

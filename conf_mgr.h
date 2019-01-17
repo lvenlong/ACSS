@@ -2,25 +2,26 @@
 #define CONF_MGR_H_
 
 #include <set>
-#include "common.h"
-#include "string"
 #include <iostream>
 #include <sstream>
-#include "conf_unit.h"
-#include "string_util.h"
-#include "conf_load.h"
+
+#include "string"
+#include "./base_code/common.h"
+#include "./base_code/conf_unit.h"
+#include "./base_code/string_util.h"
+#include "./base_code/conf_load.h"
 
 namespace bigpipe {
 
 class IconfLoader {
 public:
-    virtual int32_t load(bigpipe::ConfUnit *loader) = 0;
+    virtual int32_t load(LiLong::ConfUnit *loader) = 0;
     virtual std::string tostring() = 0;
 protected:
-    int32_t get_str_default(bigpipe::ConfUnit *loader, const char *key, const char *def, std::string &out);
-    int32_t get_str(bigpipe::ConfUnit *loader, const char *key, std::string &out);
-    int32_t get_int32_default(bigpipe::ConfUnit *loader, const char *key, int32_t def, int32_t &out);
-    int32_t get_int32(bigpipe::ConfUnit *loader, const char *key, int32_t &out);
+    int32_t get_str_default(LiLong::ConfUnit *loader, const char *key, const char *def, std::string &out);
+    int32_t get_str(LiLong::ConfUnit *loader, const char *key, std::string &out);
+    int32_t get_int32_default(LiLong::ConfUnit *loader, const char *key, int32_t def, int32_t &out);
+    int32_t get_int32(LiLong::ConfUnit *loader, const char *key, int32_t &out);
 };
 
 class ConfGetter : public IconfLoader {
@@ -35,7 +36,7 @@ public:
     std::string _pipelet;
     std::string _bundler_record_num;
     std::string _bundler_timeout;
-    int32_t load(bigpipe::ConfUnit* loader);
+    int32_t load(LiLong::ConfUnit* loader);
     virtual std::string tostring() {
         std::ostringstream oss;
         oss << "nGETTER CONFIG" << std::endl;
@@ -60,7 +61,7 @@ class ConfDisp : public IconfLoader
 public:
     int32_t count;
     int32_t queue_len;
-    int32_t load(bigpipe::ConfUnit* loader);
+    int32_t load(LiLong::ConfUnit* loader);
     virtual std::string tostring()
     {
         std::ostringstream oss;

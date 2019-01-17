@@ -5,13 +5,13 @@
 #include "mutex.h"
 #include "sema.h"
 #include "guard.h"
-#include "bigpipe_error.h"
+#include "LiLong_error.h"
 #include "shareable.h"
 #include "libs/rwlock.h"
 #include "log.h"
 
 //线程安全vector
-namespace bigpipe
+namespace LiLong
 {
     template<typename ElemType>
     class SyncVector : public Shareable
@@ -40,10 +40,10 @@ namespace bigpipe
                 }
                 catch(std::bad_alloc &)
                 {
-                    return E_BIGPIPE_NOMEM;
+                    return E_LiLong_NOMEM;
                 }
             }else{
-                return E_BIGPIPE_SYSERROR;
+                return E_LiLong_SYSERROR;
             }
 
             _psem->signal();
@@ -65,7 +65,7 @@ namespace bigpipe
                     }
                     else{
                         _relock_clear.unlock();
-                        return E_BIGPIPE_SYSERROR;
+                        return E_LiLong_SYSERROR;
                     }
                 }
                 _rwlock_clear.unlock();

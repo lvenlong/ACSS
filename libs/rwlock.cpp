@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "rwlock.h"
 
-namespace bigpipe
+namespace LiLong
 {
     //¹¹Ôìº¯Êý
     RWLock::RWLock()
