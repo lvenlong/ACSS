@@ -43,7 +43,7 @@ int32_t ConfMgr::GetConfig(ConfInfo &c)
 int32_t IconfLoader::get_int32(bigpipe::ConfUnit *loader, const char *key, int32_t &out)
 {
     std::string out_s;
-    if (get_str(loader, key, out_s) != 0) {
+    if (get_str(loader, key, out_s) != true) {
         return false;
     }
 
@@ -56,7 +56,7 @@ int32_t IconfLoader::get_int32(bigpipe::ConfUnit *loader, const char *key, int32
 
 int32_t IconfLoader::get_int32_default(bigpipe::ConfUnit *loader, const char *key, int32_t def, int32_t &out)
 {
-    if (get_int32(loader, key, out) != 0)	{
+    if (get_int32(loader, key, out) != true)	{
         out = def;
     }
 
