@@ -27,7 +27,7 @@ namespace LiLong
             return false;
         }
 
-        ret = pthread_attr_setdetachstate(&attr, _detached ? PTHREAD_CANCELED : PTHREAD_CREATE_JOINABLE);
+        ret = pthread_attr_setdetachstate(&attr, (_detached?PTHREAD_CREATE_DETACHED:PTHREAD_CREATE_JOINABLE));
         if(0 != ret){
             pthread_attr_destroy(&attr);
             return false;

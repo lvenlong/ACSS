@@ -7,7 +7,7 @@
 #include "guard.h"
 #include "LiLong_error.h"
 #include "shareable.h"
-#include "libs/rwlock.h"
+#include "../libs/rwlock.h"
 #include "log.h"
 
 //线程安全vector
@@ -16,6 +16,7 @@ namespace LiLong
     template<typename ElemType>
     class SyncVector : public Shareable
     {
+    public:
         SyncVector()
         {
             _psem = new Semaphore();
@@ -36,7 +37,7 @@ namespace LiLong
             if(guard.is_locked()){
                 try
                 {
-                    _queue.push(elem);
+                    _queue.push_back(elem);
                 }
                 catch(std::bad_alloc &)
                 {
@@ -60,11 +61,11 @@ namespace LiLong
                 {
                     ScopedGuard guard(&_mutex);
                     if(guard.is_locked()){
-                        elem = _queue.front();
-                        _queue.pop();
+                        elem = _queue.back();
+                        _queue.pop_back();
                     }
                     else{
-                        _relock_clear.unlock();
+                        _rwlock_clear.unlock();
                         return E_LiLong_SYSERROR;
                     }
                 }
@@ -85,8 +86,8 @@ namespace LiLong
         //清空
         void clear()
         {
-            sc_trace("vector clear");
-            _rwlock_clear.get_wrlock();
+            ss_trace("vector clear");
+            _rwlock_clear.get_wlock();
             ScopedGuard guard(&_mutex);
             std::vector<ElemType> tmp;
             while(_queue.size()){
