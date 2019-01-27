@@ -33,6 +33,11 @@
 #define BUFFER_SIZE  10240;
 #define PEEK_ERROR_RETRY_NUM_COUNT  5;
 
+#define DEFAULT_HB_TIMEOUT	1000
+#define DEFAULT_SERVER_TIMEOUT	5000
+#define THREADPOOL_GET_TASK_TIMEOUT	1000
+#define DEFAULT_CLIENT_TIMEOUT  120000
+
 #define LOGNAME "session"
 #define ss_trace(fmt, arg...) do{LiLong_TRACE(LOGNAME, fmt, ##arg);}while(0)
 #define ss_debug(fmt, arg...) do{LiLong_DEBUG(LOGNAME, fmt, ##arg);}while(0)

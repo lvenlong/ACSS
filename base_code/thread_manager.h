@@ -1,7 +1,7 @@
 #ifndef THREAD_MANAGER_H_INCLUDED
 #define THREAD_MANAGER_H_INCLUDED
 
-#include "thread.h"
+#include "Thread.h"
 #include "shared_pointer.h"
 #include "runnable.h"
 

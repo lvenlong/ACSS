@@ -25,8 +25,8 @@ namespace LiLong
         ThreadGroup(const ThreadGroup&);
         ThreadGroup& operator=(const ThreadGroup&);
 
-        std::vector<SharedPointer<Thread>> _threads;
-        typedef std::vector<SharedPointer<Thread>>::const_iterator citr_type;
+        std::vector<SharedPointer<Thread> > _threads;
+        typedef std::vector<SharedPointer<Thread> >::const_iterator citr_type;
     };
 }
 
